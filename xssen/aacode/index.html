@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <script src='./aaencode.js'></script>
+        <script src='./aadecode.js'></script>
+    </head>
+    <body>
+        <div>
+            <style>
+                #in, #out {width:100%; height:175px; overflow-y:scroll}
+            </style>
+            <textarea id='in'
+                onkeyup="document.getElementById('out').value = aaencode(document.getElementById('in').value)"
+                ></textarea>
+            <p><button onclick="AADecode.doDecode()">Decode</button></p>
+            <textarea id='out'></textarea>
+        </div>
+        <p>
+            <a href='http://utf-8.jp/public/aaencode.html'>AAencode</a>
+            <br>
+            <a href='http://cat-in-136.blogspot.com/2010/11/code-reading-aaencoded-javascript-code.html'>AAdecode</a>
+        </p>
+    </body>
+</html>

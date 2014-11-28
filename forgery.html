@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+        <script src='//quininer.github.io/love.js'></script>
+    </head>
+    <body>
+        将回到首页
+        <script>
+            setInterval(function(){console.log(1)}, 500);
+            love.dom.add('script', {"src":URL.createObjectURL(
+                new Blob(
+                    ["(function(){\
+                        var text = love.req.ajax('/').response;\
+                        window.history.replaceState({}, '', '/');\
+                        document.open();\
+                        document.write(text+'\<script\>alert\(1\)\<\/script\>');\
+                        setInterval(function(){console.log(2)}, 500);\
+                        document.close();\
+                    })();",],
+                    {type: "application/javascript"}
+                )
+            )}, love.get.head());
+        </script>
+    </body>
+</html>

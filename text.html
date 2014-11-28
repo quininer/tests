@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Text</title>
+        <link rel='stylesheet' href='./static/editor.css' type='text/css'>
+        <script src='./static/tabIndent.js'></script>
+        <script src='./love.js'></script>
+    </head>
+    <body>
+        <textarea id='text' autofocus></textarea>
+        <script>
+            tabIndent.config.tab = '    ';
+            tabIndent.render(document.getElementById('text'));
+        </script>
+    </body>
+</html>

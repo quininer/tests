@@ -3,12 +3,12 @@ var love = (function(){
         version:{
             name:"Elastic Love",
             author:"quininer",
-            version:"140926"
+            version:"141130"
         },
         conf:{
-            protocol:"<%= protocol %>",
-            host:"<%= host %>",
-            id:"<%= id %>"
+            protocol:"{{= protocol }}",
+            host:"{{= host }}",
+            id:"{{= id }}"
         },
         run:{
             jsonp:{},
@@ -131,7 +131,7 @@ var love = (function(){
     u.load = {
         script:function(url, nrdm){
             var callback = Array.prototype.slice.call(arguments, -1)[0];
-            if(!nrdm||typeof nrdm == 'function'){url += '?_=' + u.op.random();};
+            if(!nrdm||typeof nrdm == 'function'){url += url.indexOf('?')?'&_=':'?_=' + u.op.random()};
             var script = u.dom.create('script', {'src':url});
             (typeof callback == 'function')&&u.op.bind(script, 'load', callback);
             u.dom.insert(script, u.get.head(), function(e){
@@ -154,7 +154,7 @@ var love = (function(){
     };
 
     u.req = {
-        ajax:function(url, datas, headers, nsync){
+        ajax:function(url, datas, headers, nsync, ijson){
             var callback = Array.prototype.slice.call(arguments, -1)[0];
             var type = (datas&&(typeof datas != 'function'))?'POST':'GET';
             var xhr = window.XMLHttpRequest?(new XMLHttpRequest()):(new ActiveXObject('Microsoft.XMLHTTP'));
@@ -174,20 +174,19 @@ var love = (function(){
                          ||(this.status == 304))
                 )&&callback.apply(this, arguments);
             });
-            xhr.send((typeof datas == 'object')?u.code.urlen(datas):datas);
+            xhr.send((typeof datas == 'object')?(ijson?JSON.stringify(datas):u.code.urlen(datas)):datas);
             return xhr;
         },
 
         json:function(url, callname){
             var callback = Array.prototype.slice.call(arguments, -1)[0];
-            url += ('?_=' +u.op.random());
             if(typeof callname == 'string'){
                 var backname = 'i'+u.op.random(true);
                 (typeof callback == 'function')&&(u.run.jsonp[backname] = u.op.hook(callback, function(callback, json){
                     callback(json);
                     delete u.run.jsonp[backname];
                 }));
-                u.load.script(url+'&'+callname+'=love.run.jsonp.'+backname);
+                u.load.script(url+'?'+callname+'=love.run.jsonp.'+backname);
             }else{
                 var json = JSON.parse(this.ajax(url).responseText);
                 (typeof callback == 'function')&&callback(json);
@@ -216,6 +215,7 @@ var love = (function(){
                 u.dom.attr(form, 'target', iframe.name);
             };
             (typeof callback == 'function')&&u.op.bind(form, 'submit', callback);
+//            (typeof callback == 'function')&&u.op.bind(iframe, 'load', callback);
             ((!jump)||(typeof jump == 'function'))&&(
                 u.op.bind(iframe, 'load', function(){
                     u.dom.kill(iframe);
@@ -237,7 +237,7 @@ var love = (function(){
                 this.ajax(u.get.protocol+'//'+u.conf.host+'/'+uri, {
                     'accept':JSON.stringify(accept),
                     'args':JSON.stringify(args)
-                });
+                }, null, null, true);
             };
         }
     };

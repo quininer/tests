@@ -1,9 +1,9 @@
-var love = (function(){
+love = (function(){
     var u = {
         version:{
             name:"Elastic Love",
             author:"quininer",
-            version:"141130"
+            version:"141229"
         },
         conf:{
             protocol:"{{= protocol }}",
@@ -74,7 +74,7 @@ var love = (function(){
             return true;
         },
 
-        protocol:u.conf.protocol?((location.protocol == 'file:')?'http:':''):u.conf.protocol,
+        protocol:u.conf.protocol?u.conf.protocol:((location.protocol == 'file:')?'http:':''),
         isdom:function(e){return e.nodeType?true:false},
         id:function(name){return document.getElementById(name)},
         name:function(name){return document.getElementsByName(name)},
@@ -93,7 +93,7 @@ var love = (function(){
             t.innerHTML = dom;
             var i = t.children[0];
             (hide&&(typeof hide != 'function'))&&(i.style.display = 'none');
-            this.insert(i, e, (typeof callback == 'function')&&callback)
+            this.insert(i, e, (typeof callback == 'function')&&callback);
             return i;
         },
 
@@ -257,4 +257,4 @@ var love = (function(){
     };
 
     return u;
-})();
+}());

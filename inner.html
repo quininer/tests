@@ -5,7 +5,7 @@
         <meta name='referrer' content='never'>
         <title>innerHTML_TestTool</title>
         <style>
-            #canvas, #canvas2, #html, #log {
+            #canvas, #html {
                 width:100%;
                 height:14em;
                 overflow-y:scroll
@@ -16,11 +16,11 @@
     <body>
         <textarea id="html"></textarea><hr>
         <iframe id="canvas"></iframe><hr>
-        <textarea id="log"></textarea>
+        <button id="button">Open to Tab</button>
         <script>
-            var html = document.getElementById('html');
-            var log = document.getElementById('log');
-            var canvas = document.getElementById('canvas');
+            var html = document.getElementById('html'),
+                canvas = document.getElementById('canvas'),
+                button = document.getElementById('button');
 
             document.location.hash.length > 1 ? html.value = decodeURI(document.location.hash.slice(1)) : false;
             document.location.hash = '';
@@ -30,7 +30,6 @@
                     return false;
                 };
                 canvas.src = URL.createObjectURL(new Blob([html.value,], {type:"text/html"}));
-                log.value = html.value;
                 location.hash = html.value; // a little document.write() backup
                 try{
                     log.value += '\r\n\r\n=== Additional Info ===\r\nonclick: ' + canvas.firstChild.onclick;
@@ -40,6 +39,11 @@
                     log.value += '\r\nruntimeStyle.cssText: ' + canvas.firstChild.runtimeStyle.cssText;
                 }catch(e){e};
             };
+
+            button.onclick = function(){
+                window.open(canvas.src);
+            };
+
             html.onkeyup = updateCanvas;
             window.onload = updateCanvas;
         </script>

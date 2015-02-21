@@ -27,18 +27,11 @@
             document.location.hash = '';
 
             var updateCanvas = function(e){
-                if(e && e.keyCode && (e.keyCode == 27 || e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40)) {
+                if(e && e.keyCode && !((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey)){
                     return false;
                 };
                 canvas.src = URL.createObjectURL(new Blob([html.value,], {type:"text/html"}));
                 location.hash = html.value; // a little document.write() backup
-                try{
-                    log.value += '\r\n\r\n=== Additional Info ===\r\nonclick: ' + canvas.firstChild.onclick;
-                    log.value += '\r\nvalue: ' + canvas.firstChild.value;
-                    log.value += '\r\nstyle.cssText: ' + canvas.firstChild.style.cssText;
-                    log.value += '\r\ncurrentStyle.cssText: ' + canvas.firstChild.currentStyle.cssText;
-                    log.value += '\r\nruntimeStyle.cssText: ' + canvas.firstChild.runtimeStyle.cssText;
-                }catch(e){e};
             };
 
             button.onclick = function(){

@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/xhtml;charset=utf-8">
         <meta name='referrer' content='never'>
         <title>innerHTML TestTool</title>
+        <script>if(document.location.protocol == 'http:')document.location.protocol = 'https';</script>
         <style>
             #canvas, #html {
                 width:100%;
@@ -11,6 +12,7 @@
                 overflow-y:scroll
             }
         </style>
+        <script src='/static/tabIndent.js'></script>
     </head>
     <body>
         <textarea id="html"></textarea><hr>
@@ -45,6 +47,10 @@
 
             html.onkeyup = updateCanvas;
             window.onload = updateCanvas;
+        </script>
+        <script>
+            tabIndent.config.tab = '    ';
+            tabIndent.render(document.getElementById('html'));
         </script>
     </body>
 </html>

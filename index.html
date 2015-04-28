@@ -8,7 +8,7 @@
         <style>
             #canvas, #text {
                 width: 100%;
-                height: 43%;
+                height: 48%;
                 overflow-y: scroll
             }
         </style>
@@ -17,28 +17,24 @@
     <body style="height: 100%">
         <div style="height: 100%">
             <textarea id="text"></textarea><hr>
-            <iframe id="canvas" sandbox="allow-scripts allow-forms allow-popups allow-pointer-lock"></iframe><hr>
-            <button id="button">Open to Tab</button>
+            <iframe id="canvas" sandbox="allow-scripts allow-forms allow-popups allow-pointer-lock"></iframe>
         </div>
         <script>
             var text = document.getElementById('text'),
                 canvas = document.getElementById('canvas'),
                 button = document.getElementById('button');
-            if(document.location.hash.length>1){
-                text.value = atob(document.location.hash.slice(1))
-            };
+            if(document.location.hash.length>1)text.value = atob(document.location.hash.slice(1));
             document.location.hash = '';
 
             window.onload = text.onkeyup = function(e){
-                if(e && e.keyCode && !((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey)){
-                    return false;
+                if((!e.keyCode)||(e.keyCode == 10 || e.keyCode == 13)){
+                    if((!e.keyCode)||e.ctrlKey){
+                        canvas.src = URL.createObjectURL(new Blob([text.value,], {type:"text/html"}));
+                        location.hash = btoa(text.value); // a little document.write() backup
+                    }else if(e.altKey){
+                        window.open(canvas.src);
+                    };
                 };
-                canvas.src = URL.createObjectURL(new Blob([text.value,], {type:"text/html"}));
-                location.hash = btoa(text.value); // a little document.write() backup
-            };
-
-            button.onclick = function(){
-                window.open(canvas.src);
             };
         </script>
         <script>

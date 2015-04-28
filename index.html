@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html style="height: 100%">
     <head>
         <meta http-equiv="Content-Type" content="text/xhtml;charset=utf-8">
         <meta name='referrer' content='never'>
@@ -7,17 +7,19 @@
         <script>if(document.location.protocol == 'http:')document.location.protocol = 'https';</script>
         <style>
             #canvas, #text {
-                width:100%;
-                height:20em;
-                overflow-y:scroll
+                width: 100%;
+                height: 43%;
+                overflow-y: scroll
             }
         </style>
         <script src='./static/tabIndent.js'></script>
     </head>
-    <body>
-        <textarea id="text"></textarea><hr>
-        <iframe id="canvas" sandbox="allow-scripts allow-forms allow-popups allow-pointer-lock"></iframe><hr>
-        <button id="button">Open to Tab</button>
+    <body style="height: 100%">
+        <div style="height: 100%">
+            <textarea id="text"></textarea><hr>
+            <iframe id="canvas" sandbox="allow-scripts allow-forms allow-popups allow-pointer-lock"></iframe><hr>
+            <button id="button">Open to Tab</button>
+        </div>
         <script>
             var text = document.getElementById('text'),
                 canvas = document.getElementById('canvas'),

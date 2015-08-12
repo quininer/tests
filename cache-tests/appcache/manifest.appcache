@@ -1,0 +1,7 @@
+CACHE MANIFEST
+# v1 - 2029-08-12
+# hijack
+fallback.html
+
+FALLBACK:
+/ fallback.html

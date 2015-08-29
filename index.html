@@ -16,21 +16,27 @@
 	<body style="height: 100%">
 		<div style="height: 100%">
 			<textarea id="text"></textarea>
-			<button id="open">open</button>
+			<button id="preview">preview</button><button id="open">open</button>
 			<iframe id="canvas" sandbox="allow-scripts allow-forms allow-popups allow-pointer-lock"></iframe>
 		</div>
 		<script>
 			var text = document.getElementById('text'),
 				canvas = document.getElementById('canvas'),
-				button = document.getElementById('open');
+				previewb = document.getElementById('preview'),
+				openb = document.getElementById('open');
 			if(document.location.hash.length>1)text.value = atob(document.location.hash.slice(1));
 			document.location.hash = '';
 
-			window.onload = text.onkeyup = function(e){
+			window.onload = previewb.onclick = function(e){
 				canvas.src = URL.createObjectURL(new Blob([text.value,], {type:"text/html"}));
 				location.hash = btoa(text.value); // a little document.write() backup
 			};
-			button.onclick = function(e){
+			text.onkeyup = function(e){
+				if((!e.keyCode) || (e.keyCode == 10 || e.keyCode == 13) && e.altKey){
+					previewb.onclick();
+				};
+			};
+			openb.onclick = function(e){
 				window.open(canvas.src);
 			};
 		</script>
